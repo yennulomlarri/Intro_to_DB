@@ -2,8 +2,8 @@
 -- Use the database
 USE alx_book_store;
 
--- Insert multiple rows into Customers table with ON DUPLICATE KEY UPDATE
-INSERT INTO Customers (customer_id, customer_name, email, address)
+-- Insert multiple rows into customer table with ON DUPLICATE KEY UPDATE
+INSERT INTO customer (customer_id, customer_name, email, address)
 VALUES
     (2, 'Blessing Malik', 'bmalik@sandtech.com', '124 Happiness Ave.'),
     (3, 'Obed Ehoneah', 'eobed@sandtech.com', '125 Happiness Ave.'),
