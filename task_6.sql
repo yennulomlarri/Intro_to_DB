@@ -1,4 +1,3 @@
--- File: task_6.sql
 -- Use the database
 USE alx_book_store;
 
