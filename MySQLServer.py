@@ -1,29 +1,38 @@
 import mysql.connector
-from mysql.connector import Error
+from mysql.connector import errorcode
 
-try:
-    # --- REPLACE WITH YOUR PASSWORD ---
-    my_password = "gaTeCare@#$12"
 
-    # Connect
-    connection = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password=my_password
-    )
-    cursor = connection.cursor()
+def create_database():
+    """Connects to MySQL server and creates the alx_book_store database."""
+    conn = None  # Initialize conn to None
+    cursor = None  # Initialize cursor to None
+    try:
+        # Replace with your MySQL connection details
+        conn = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="gaTeCare@#$12"
+        )
+        cursor = conn.cursor()
 
-    # Create database
-    cursor.execute("CREATE DATABASE IF NOT EXISTS alx_book_store")
-    print("Database 'alx_book_store' created successfully!")
+        cursor.execute("CREATE DATABASE IF NOT EXISTS alx_book_store")
 
-except Error as e:
-    # This is the exception handling the checker wants
-    print(f"Error: {e}")
+        print("Database 'alx_book_store' created successfully!")
 
-finally:
-    # Close everything
-    if 'cursor' in locals() and cursor is not None:
-        cursor.close()
-    if 'connection' in locals() and connection.is_connected():
-        connection.close()
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(f"Failed to connect to the database: {err}")
+    finally:
+        # Now, we check if the objects were successfully created before closing
+        if cursor:
+            cursor.close()
+        if conn and conn.is_connected():
+            conn.close()
+
+
+if __name__ == "__main__":
+    create_database()
